@@ -2,23 +2,29 @@
 const obliczWyplate = ()=>{
     
 
-    let tabCzas = new Array;
-    let tabNames = new Array;
+    // let tabCzas = new Array;
+    let namesTime = new Array;
     let wyplata = document.getElementsByClassName('wyplata');
 
     
 
     for(let n=0; n< wyplata.length; n++)
     {
-        let pracownik = document.getElementsByClassName('pracownik')[n].innerHTML;
-        let czas = document.getElementsByClassName('czas')[n].value; 
+        
+        let czas = Number(document.getElementsByClassName('czas')[n].value); 
         let stawka = document.getElementsByClassName('stawka')[n].value;
-       // console.log(czas, stawka);
-       
-       tabNames.push(pracownik);
-       console.log(pracownik);
+        let imieNazwisko = document.getElementsByClassName('pracownik')[n].innerHTML;
 
-       tabCzas.push(Number(czas));
+        let person = {
+            name: imieNazwisko,
+            time: czas
+        };
+
+        namesTime.push(person);
+        //namesTime to tablica obiektow zdefiniowanych przez parę klucz-wartość dla imienia i czasu pracownika
+        
+        
+
 
         if(czas > 160)
         {
@@ -30,7 +36,6 @@ const obliczWyplate = ()=>{
         
             if(czas < 100)
             {
-               // console.log(n+1);
                 document.getElementById(`pracownik${n+1}`).style.color = "red";
             }
         
@@ -40,16 +45,21 @@ const obliczWyplate = ()=>{
 
     }
     
+    namesTime.sort((a,b) => (a.time < b.time) ? 1 : -1);
+    //sortuje względem klucza time
+    console.log(namesTime);
+    let najlepsi = document.getElementById('najlepsi-pracownicy');
+    najlepsi.removeChild();
     
-    tabCzas.sort((a, b) => b - a);
-    
-    
-    
+    for(let i=0; i<3; i++)
+    {   
+        let paragraf = document.createElement('p');
+        paragraf.innerText = `${i+1}. ${namesTime[i].name}`;
+        najlepsi.appendChild(paragraf);
 
+    }
     
     
-
-    //przeiterować po wszsytkich i wybrac 3 najlepszych, 3 z najlepsza liczba godzin i wyswietlic ich pod lista
     
 };
 
@@ -58,5 +68,3 @@ let przycisk = document.getElementById("oblicz");
 
 przycisk.onclick = obliczWyplate;
 
-
-// console.log(obliczWyplate());
