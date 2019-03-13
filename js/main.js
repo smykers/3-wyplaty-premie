@@ -49,7 +49,6 @@ const obliczWyplate = ()=>{
     //sortuje względem klucza time
     console.log(namesTime);
     let najlepsi = document.getElementById('najlepsi-pracownicy');
-    najlepsi.removeChild();
     
     for(let i=0; i<3; i++)
     {   
